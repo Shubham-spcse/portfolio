@@ -20,7 +20,6 @@ if (hamburger) {
     });
 }
 
-// Close menu when clicking on nav link
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
@@ -31,7 +30,6 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
-// Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
         e.preventDefault();
@@ -42,7 +40,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// Active nav link on scroll
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
 
@@ -73,13 +70,10 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Enhanced typing effect
 const typingText = document.querySelector('.typing-text');
 if (typingText) {
     const texts = ['Software Engineer 💻', 'Java Developer ☕', 'Tech Enthusiast 🚀', 'Problem Solver 🧩'];
-    let textIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+    let textIndex = 0, charIndex = 0, isDeleting = false;
 
     function type() {
         const currentText = texts[textIndex];
@@ -105,7 +99,6 @@ if (typingText) {
     setTimeout(type, 1000);
 }
 
-// Form submission
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
@@ -124,7 +117,6 @@ if (contactForm) {
     });
 }
 
-// Scroll reveal animation
 const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
 const observer = new IntersectionObserver(function(entries) {
     entries.forEach(entry => {
@@ -144,7 +136,6 @@ elementsToAnimate.forEach(el => {
     observer.observe(el);
 });
 
-// Parallax effect for hero section
 document.addEventListener('mousemove', (e) => {
     const heroImage = document.querySelector('.hero-image img');
     if (heroImage && window.innerWidth > 968) {
@@ -154,13 +145,11 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
-// Skill tags animation
 const skillTags = document.querySelectorAll('.skill-tag');
 skillTags.forEach((tag, index) => {
     tag.style.animationDelay = `${index * 0.1}s`;
 });
 
-// Project cards tilt effect
 const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
@@ -179,7 +168,6 @@ projectCards.forEach(card => {
     });
 });
 
-// Counter animation for stats
 const animateCounter = (element, target, duration = 2000) => {
     let start = 0;
     const increment = target / (duration / 16);
@@ -210,7 +198,6 @@ document.querySelectorAll('.stat-item').forEach(stat => {
     statsObserver.observe(stat);
 });
 
-// Page load animation
 window.addEventListener('load', () => {
     document.body.style.opacity = '0';
     setTimeout(() => {
@@ -220,7 +207,7 @@ window.addEventListener('load', () => {
 });
 
 // ===================================
-// DOWNLOAD CV - PROFESSIONAL FIREWORKS
+// PROFESSIONAL FIREWORKS ANIMATION
 // ===================================
 const downloadCVBtn = document.getElementById('downloadCVBtn');
 
