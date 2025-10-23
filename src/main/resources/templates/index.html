@@ -93,7 +93,8 @@
             <div class="hero-image" data-aos="fade-left" data-aos-duration="1200" data-aos-delay="400">
                 <div class="image-wrapper">
                     <div class="blob"></div>
-                    <img th:src="@{/images/profile.jpg}" alt="Shubham Prajapati - Software Engineer">
+                    <!-- FIXED: Changed from profile.jpg to profile.png -->
+                    <img th:src="@{/assets/profile.png}" alt="Shubham Prajapati - Software Engineer">
                 </div>
             </div>
         </div>
@@ -287,7 +288,9 @@
             <!-- Project 1 -->
             <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="100">
                 <div class="project-image">
-                    <img th:src="@{/images/projects/qr-attendance.jpg}" alt="QR Attendance System">
+                    <!-- Project images can be added later or use placeholder -->
+                    <img th:src="@{/images/projects/qr-attendance.jpg}" alt="QR Attendance System"
+                         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, rgba(102, 126, 234, 0.3), rgba(118, 75, 162, 0.3))';">
                     <div class="project-overlay">
                         <a href="https://github.com/Shubham-spcse" target="_blank" class="project-link">
                             <i class="fab fa-github"></i>
@@ -316,7 +319,9 @@
             <!-- Project 2 -->
             <div class="project-card" data-aos="fade-up" data-aos-duration="800" data-aos-delay="200">
                 <div class="project-image">
-                    <img th:src="@{/images/projects/hostel-management.jpg}" alt="Hostel Management System">
+                    <!-- Project images can be added later or use placeholder -->
+                    <img th:src="@{/images/projects/hostel-management.jpg}" alt="Hostel Management System"
+                         onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, rgba(79, 172, 254, 0.3), rgba(236, 72, 153, 0.3))';">
                     <div class="project-overlay">
                         <a href="https://github.com/Shubham-spcse" target="_blank" class="project-link">
                             <i class="fab fa-github"></i>
