@@ -269,3 +269,204 @@ window.addEventListener('load', () => {
 });
 
 console.log('🚀 Portfolio loaded successfully!');
+// ===================================
+// DOWNLOAD CV - FIRECRACKER ANIMATION
+// ===================================
+
+// Get the Download CV button
+const downloadCVBtn = document.getElementById('downloadCVBtn');
+
+if (downloadCVBtn) {
+    downloadCVBtn.addEventListener('click', function(e) {
+        e.preventDefault();
+
+        // Create firecracker animation
+        createFirecrackerAnimation();
+
+        // Show contact message after a short delay
+        setTimeout(() => {
+            showContactMessage();
+        }, 1500);
+    });
+}
+
+// Firecracker Animation Function
+function createFirecrackerAnimation() {
+    const colors = ['#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe', '#00f2fe', '#FFD700', '#FF6B6B'];
+    const particleCount = 100;
+
+    // Create container for firecrackers
+    const container = document.createElement('div');
+    container.style.position = 'fixed';
+    container.style.top = '0';
+    container.style.left = '0';
+    container.style.width = '100%';
+    container.style.height = '100%';
+    container.style.pointerEvents = 'none';
+    container.style.zIndex = '9999';
+    document.body.appendChild(container);
+
+    // Create multiple firecracker bursts
+    for (let burst = 0; burst < 5; burst++) {
+        setTimeout(() => {
+            const x = Math.random() * window.innerWidth;
+            const y = Math.random() * window.innerHeight * 0.6;
+            createBurst(container, x, y, particleCount / 5, colors);
+        }, burst * 300);
+    }
+
+    // Remove container after animation
+    setTimeout(() => {
+        document.body.removeChild(container);
+    }, 4000);
+}
+
+// Create individual burst
+function createBurst(container, x, y, count, colors) {
+    for (let i = 0; i < count; i++) {
+        const particle = document.createElement('div');
+        const color = colors[Math.floor(Math.random() * colors.length)];
+        const angle = (Math.PI * 2 * i) / count;
+        const velocity = 2 + Math.random() * 4;
+
+        particle.style.position = 'absolute';
+        particle.style.left = x + 'px';
+        particle.style.top = y + 'px';
+        particle.style.width = '8px';
+        particle.style.height = '8px';
+        particle.style.borderRadius = '50%';
+        particle.style.backgroundColor = color;
+        particle.style.boxShadow = `0 0 10px ${color}`;
+
+        container.appendChild(particle);
+
+        // Animate particle
+        let vx = Math.cos(angle) * velocity;
+        let vy = Math.sin(angle) * velocity;
+        let px = x;
+        let py = y;
+        let opacity = 1;
+        let frame = 0;
+
+        const animate = () => {
+            frame++;
+            vy += 0.1; // Gravity
+            px += vx;
+            py += vy;
+            opacity -= 0.015;
+
+            particle.style.left = px + 'px';
+            particle.style.top = py + 'px';
+            particle.style.opacity = opacity;
+
+            if (opacity > 0 && frame < 150) {
+                requestAnimationFrame(animate);
+            } else {
+                container.removeChild(particle);
+            }
+        };
+
+        requestAnimationFrame(animate);
+    }
+}
+
+// Show Contact Message with Beautiful Modal
+function showContactMessage() {
+    // Create modal overlay
+    const modal = document.createElement('div');
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(10, 14, 39, 0.95);
+        backdrop-filter: blur(10px);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 10000;
+        animation: fadeIn 0.3s ease;
+    `;
+
+    // Create modal content
+    const modalContent = document.createElement('div');
+    modalContent.style.cssText = `
+        background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+        backdrop-filter: blur(20px);
+        border: 2px solid rgba(102, 126, 234, 0.3);
+        border-radius: 20px;
+        padding: 3rem;
+        max-width: 500px;
+        text-align: center;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        animation: scaleIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    `;
+
+    modalContent.innerHTML = `
+        <div style="font-size: 4rem; margin-bottom: 1rem;">📄</div>
+        <h2 style="font-size: 2rem; margin-bottom: 1rem; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">
+            CV Request
+        </h2>
+        <p style="font-size: 1.2rem; color: #b4b9d4; margin-bottom: 2rem; line-height: 1.6;">
+            Please contact <strong style="color: #667eea;">Shubham</strong> directly to request the CV.
+        </p>
+        <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+            <a href="mailto:spcse900@gmail.com" style="padding: 1rem 2rem; background: linear-gradient(135deg, #667eea, #764ba2); color: white; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; transition: transform 0.3s;">
+                <i class="fas fa-envelope"></i> Email Me
+            </a>
+            <a href="https://linkedin.com/in/ShubhamPrajapati" target="_blank" style="padding: 1rem 2rem; background: rgba(255, 255, 255, 0.1); color: white; text-decoration: none; border-radius: 10px; font-weight: 600; display: inline-flex; align-items: center; gap: 0.5rem; border: 2px solid rgba(102, 126, 234, 0.5); transition: transform 0.3s;">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+        </div>
+        <button id="closeModal" style="margin-top: 2rem; padding: 0.8rem 2rem; background: transparent; color: #b4b9d4; border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 10px; cursor: pointer; font-size: 1rem; transition: all 0.3s;">
+            Close
+        </button>
+    `;
+
+    modal.appendChild(modalContent);
+    document.body.appendChild(modal);
+
+    // Add animations
+    const style = document.createElement('style');
+    style.textContent = `
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes scaleIn {
+            from { transform: scale(0.8); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+    `;
+    document.head.appendChild(style);
+
+    // Close modal
+    const closeBtn = modal.querySelector('#closeModal');
+    closeBtn.addEventListener('click', () => {
+        modal.style.animation = 'fadeOut 0.3s ease';
+        setTimeout(() => {
+            document.body.removeChild(modal);
+        }, 300);
+    });
+
+    // Close on outside click
+    modal.addEventListener('click', (e) => {
+        if (e.target === modal) {
+            modal.style.animation = 'fadeOut 0.3s ease';
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 300);
+        }
+    });
+
+    // Add fadeOut animation
+    style.textContent += `
+        @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+        }
+    `;
+}
+
+console.log('🎆 Firecracker animation loaded!');
