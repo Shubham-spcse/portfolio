@@ -20,6 +20,7 @@ if (hamburger) {
     });
 }
 
+// Close menu when clicking on nav link
 document.querySelectorAll('.nav-link').forEach(link => {
     link.addEventListener('click', () => {
         navMenu.classList.remove('active');
@@ -30,16 +31,25 @@ document.querySelectorAll('.nav-link').forEach(link => {
     });
 });
 
+// Smooth scrolling for navigation links - FIXED to prevent errors
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+
+        // Skip if it's just "#" (like the Download CV button)
+        if (href === '#' || href.length <= 1) {
+            return; // Don't prevent default, let other handlers work
+        }
+
         e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
+        const target = document.querySelector(href);
         if (target) {
             target.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
     });
 });
 
+// Active nav link on scroll
 const sections = document.querySelectorAll('section');
 const navLinks = document.querySelectorAll('.nav-link');
 
@@ -70,6 +80,7 @@ window.addEventListener('scroll', () => {
     }
 });
 
+// Enhanced typing effect
 const typingText = document.querySelector('.typing-text');
 if (typingText) {
     const texts = ['Software Engineer 💻', 'Java Developer ☕', 'Tech Enthusiast 🚀', 'Problem Solver 🧩'];
@@ -99,24 +110,87 @@ if (typingText) {
     setTimeout(type, 1000);
 }
 
+// ===================================
+// CONTACT FORM WITH BACKEND API
+// ===================================
 const contactForm = document.getElementById('contactForm');
 if (contactForm) {
-    contactForm.addEventListener('submit', (e) => {
+    contactForm.addEventListener('submit', async (e) => {
         e.preventDefault();
+
         const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
+        const originalContent = submitBtn.innerHTML;
+        submitBtn.innerHTML = '<span>Sending...</span> <i class="fas fa-spinner fa-spin"></i>';
         submitBtn.disabled = true;
 
-        setTimeout(() => {
-            alert('Thank you for your message! I will get back to you soon. 🚀');
-            contactForm.reset();
-            submitBtn.textContent = originalText;
+        const formData = {
+            name: document.getElementById('name').value.trim(),
+            email: document.getElementById('email').value.trim(),
+            subject: document.getElementById('subject').value.trim(),
+            message: document.getElementById('message').value.trim()
+        };
+
+        try {
+            const response = await fetch('/api/contact/send', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (response.ok && data.success) {
+                showNotification('✅ Thank you! Your message has been sent successfully! I will get back to you soon. 🚀', 'success');
+                contactForm.reset();
+            } else {
+                showNotification('❌ ' + (data.message || 'Something went wrong. Please try again.'), 'error');
+            }
+
+        } catch (error) {
+            console.error('Error:', error);
+            showNotification('❌ Network error. Please check your connection and try again.', 'error');
+        } finally {
+            submitBtn.innerHTML = originalContent;
             submitBtn.disabled = false;
-        }, 1500);
+        }
     });
 }
 
+// Notification function
+function showNotification(message, type) {
+    const notification = document.createElement('div');
+    notification.style.cssText = `
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        padding: 1.5rem 2rem;
+        background: ${type === 'success' ? 'linear-gradient(135deg, #667eea, #764ba2)' : 'linear-gradient(135deg, #f5576c, #f093fb)'};
+        color: white;
+        border-radius: 12px;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        z-index: 10001;
+        font-weight: 600;
+        animation: slideIn 0.3s ease;
+        max-width: 400px;
+        font-size: 1rem;
+    `;
+
+    notification.textContent = message;
+    document.body.appendChild(notification);
+
+    const style = document.createElement('style');
+    style.textContent = '@keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }';
+    document.head.appendChild(style);
+
+    setTimeout(() => {
+        notification.style.animation = 'slideIn 0.3s ease reverse';
+        setTimeout(() => document.body.removeChild(notification), 300);
+    }, 5000);
+}
+
+// Scroll reveal animation
 const observerOptions = { threshold: 0.1, rootMargin: '0px 0px -100px 0px' };
 const observer = new IntersectionObserver(function(entries) {
     entries.forEach(entry => {
@@ -136,6 +210,7 @@ elementsToAnimate.forEach(el => {
     observer.observe(el);
 });
 
+// Parallax effect for hero section
 document.addEventListener('mousemove', (e) => {
     const heroImage = document.querySelector('.hero-image img');
     if (heroImage && window.innerWidth > 968) {
@@ -145,11 +220,13 @@ document.addEventListener('mousemove', (e) => {
     }
 });
 
+// Skill tags animation
 const skillTags = document.querySelectorAll('.skill-tag');
 skillTags.forEach((tag, index) => {
     tag.style.animationDelay = `${index * 0.1}s`;
 });
 
+// Project cards tilt effect
 const projectCards = document.querySelectorAll('.project-card');
 projectCards.forEach(card => {
     card.addEventListener('mousemove', (e) => {
@@ -168,6 +245,7 @@ projectCards.forEach(card => {
     });
 });
 
+// Counter animation for stats
 const animateCounter = (element, target, duration = 2000) => {
     let start = 0;
     const increment = target / (duration / 16);
@@ -198,6 +276,7 @@ document.querySelectorAll('.stat-item').forEach(stat => {
     statsObserver.observe(stat);
 });
 
+// Page load animation
 window.addEventListener('load', () => {
     document.body.style.opacity = '0';
     setTimeout(() => {
@@ -215,7 +294,7 @@ if (downloadCVBtn) {
     downloadCVBtn.addEventListener('click', function(e) {
         e.preventDefault();
         launchFireworks();
-        setTimeout(() => showContactMessage(), 2000);
+        setTimeout(() => showContactMessage(), 8000);
     });
 }
 
@@ -407,4 +486,4 @@ function showContactMessage() {
     modal.addEventListener('click', (e) => { if (e.target === modal) close(); });
 }
 
-console.log('🎆 Portfolio with professional fireworks loaded!');
+console.log('🎆 Portfolio with professional fireworks and backend API loaded!');
