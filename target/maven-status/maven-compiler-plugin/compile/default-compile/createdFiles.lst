@@ -1,2 +1,6 @@
+com\shubham\portfolio\model\ContactMessage.class
 com\shubham\portfolio\controller\PortfolioController.class
+com\shubham\portfolio\controller\ContactMessageController.class
 com\shubham\portfolio\PortfolioApplication.class
+com\shubham\portfolio\service\ContactMessageService.class
+com\shubham\portfolio\repository\ContactMessageRepository.class
